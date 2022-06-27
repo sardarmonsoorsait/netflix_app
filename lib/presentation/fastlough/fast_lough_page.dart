@@ -11,7 +11,11 @@ class FastLough extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       scrollDirection: Axis.vertical,
-      children: List.generate(10, (index) => VideoListWidget(index: index,)),
+      children: List.generate(
+          10,
+          (index) => VideoListWidget(
+                index: index,
+              )),
     );
   }
 }

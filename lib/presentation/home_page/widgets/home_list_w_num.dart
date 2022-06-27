@@ -23,7 +23,9 @@ class HomeListWnum extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return HomeListContainer(index: index,);
+              return HomeListContainer(
+                index: index,
+              );
             },
             separatorBuilder: (context, index) {
               return SizedBox(

@@ -14,25 +14,25 @@ class MainPage extends StatelessWidget {
   ValueNotifier<int> indexNotifier = ValueNotifier(0);
   List pages = [
     HomePage(),
-    NewHot(),
+    NewHot(
+      title: 'New & Hot',
+    ),
     FastLough(),
-    SearchPage(),
+    SearchIdlePage(),
     DownlodsPage()
   ];
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: backgroundColor,
       body: ValueListenableBuilder(
-        valueListenable: indexNotifier,
-        builder: (BuildContext ctx, int value, _) {
-          return SafeArea(
-            child: pages[value],
-          );
-        }
-      ),
+          valueListenable: indexNotifier,
+          builder: (BuildContext ctx, int value, _) {
+            return SafeArea(
+              child: pages[value],
+            );
+          }),
       bottomNavigationBar: ValueListenableBuilder(
           valueListenable: indexNotifier,
           builder: (BuildContext ctx, int newIndex, _) {
@@ -40,7 +40,6 @@ class MainPage extends StatelessWidget {
                 currentIndex: newIndex,
                 onTap: (newvalue) {
                   indexNotifier.value = newvalue;
-                  
                 },
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: Colors.white,

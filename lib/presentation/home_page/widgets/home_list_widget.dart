@@ -10,9 +10,13 @@ class HomeListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text,style: TextStyle(color: textColor,fontSize: 25),),
+        Text(
+          text,
+          style: TextStyle(color: textColor, fontSize: 25),
+        ),
         Container(
           height: MediaQuery.of(context).size.height / 6,
           //width: MediaQuery.of(context).size.width /6,
@@ -21,7 +25,7 @@ class HomeListWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               return HomeListContainer();
             },
-            separatorBuilder: (context,index) {
+            separatorBuilder: (context, index) {
               return SizedBox(
                 width: 10,
               );
@@ -44,7 +48,12 @@ class HomeListContainer extends StatelessWidget {
       height: 100,
       width: MediaQuery.of(context).size.width / 4,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.red,image: DecorationImage(fit: BoxFit.fill,image: NetworkImage('https://www.themoviedb.org/t/p/w300_and_h450_bestv2/zzXFM4FKDG7l1ufrAkwQYv2xvnh.jpg'))),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.red,
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage(
+                  'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/zzXFM4FKDG7l1ufrAkwQYv2xvnh.jpg'))),
     );
   }
 }

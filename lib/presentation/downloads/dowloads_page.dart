@@ -3,12 +3,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_app/application/downloads/downloads_bloc.dart';
 import 'package:netflix_app/core/colors/colors.dart';
+import 'package:netflix_app/core/strings.dart';
 import 'package:netflix_app/presentation/widgets/app_bar_widget.dart';
 
 class DownlodsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      BlocProvider.of<DownloadsBloc>(context)
+          .add(DownloadsEvent.getDownloadImages());
+    });
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Scaffold(
@@ -19,7 +27,8 @@ class DownlodsPage extends StatelessWidget {
         body: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 16,right: 16,bottom: 30,top: 25),
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, bottom: 30, top: 25),
               child: _smartdownload(),
             ),
             Text(
@@ -28,7 +37,8 @@ class DownlodsPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 40, right: 40,top: 30,bottom: 25),
+              padding: const EdgeInsets.only(
+                  left: 40, right: 40, top: 30, bottom: 25),
               child: Text(
                 'We will downloaded a personalised slection of movies and shows for you,so there is always somthing to watch on your device',
                 style: TextStyle(
@@ -36,21 +46,71 @@ class DownlodsPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 120,
-                  backgroundColor: Colors.grey,
-                ),
-                Transform.rotate(alignment: Alignment(0,2),angle: 25 * pi / 180,child: Container(height: 200,width: 125,decoration: BoxDecoration(image:DecorationImage(fit: BoxFit.fill,image: NetworkImage('https://www.themoviedb.org/t/p/w300_and_h450_bestv2/stTEycfG9928HYGEISBFaG1ngjM.jpg')) ,borderRadius: BorderRadius.circular(10),color: Colors.blue),)),
-                Transform.rotate(alignment: Alignment(0,2),angle :-(25 * pi /180),child: Container(height: 200,width: 125,decoration: BoxDecoration(image:DecorationImage(fit: BoxFit.fill,image: NetworkImage('https://image.tmdb.org/t/p/w780/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg')),borderRadius: BorderRadius.circular(10),color: Colors.green),)),
-                Container(height: 200,width: 125,decoration: BoxDecoration(image:DecorationImage(fit: BoxFit.fill,image: NetworkImage('https://www.themoviedb.org/t/p/w600_and_h900_bestv2/neMZH82Stu91d3iqvLdNQfqPPyl.jpg')),borderRadius: BorderRadius.circular(10),color: Colors.amber),)
-              
-              ],
+            BlocBuilder<DownloadsBloc, DownloadsState>(
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    Text('${apiAppendUrl}${state.downloads[5].posterPath}'),
+                    SizedBox(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 120,
+                            backgroundColor: Colors.grey,
+                          ),
+                          Transform.rotate(
+                              alignment: Alignment(0, 2),
+                              angle: 25 * pi / 180,
+                              child: Container(
+                                height: 200,
+                                width: 125,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                            '${apiAppendUrl}${state.downloads[4].posterPath}')),
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.blue),
+                              )),
+                          Transform.rotate(
+                              alignment: Alignment(0, 2),
+                              angle: -(25 * pi / 180),
+                              child: Container(
+                                height: 200,
+                                width: 125,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                            '${apiAppendUrl}${state.downloads[1].posterPath}')),
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.green),
+                              )),
+                          Container(
+                            height: 200,
+                            width: 125,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(
+                                        '${apiAppendUrl}${state.downloads[2].posterPath}')),
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.amber),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 30.0,top: 60,),
+              padding: const EdgeInsets.only(
+                left: 30.0,
+                right: 30.0,
+                top: 60,
+              ),
               child: ElevatedButton(
                   onPressed: () {},
                   child: Text(
@@ -74,13 +134,13 @@ class DownlodsPage extends StatelessWidget {
 
   Row _smartdownload() {
     return Row(
-              children: [
-                Icon(
-                  Icons.settings,
-                  color: textColor,
-                ),
-                Text('Smart Downloads', style: TextStyle(color: textColor))
-              ],
-            );
+      children: [
+        Icon(
+          Icons.settings,
+          color: textColor,
+        ),
+        Text('Smart Downloads', style: TextStyle(color: textColor))
+      ],
+    );
   }
 }

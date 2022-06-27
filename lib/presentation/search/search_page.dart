@@ -19,12 +19,10 @@ class SearchPage extends StatelessWidget {
             crossAxisCount: 3,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
-            childAspectRatio: 1/1.4,
-            children: 
-              List.generate(10, (index) {
-                return SearchWidget();
-              })
-            ,
+            childAspectRatio: 1 / 1.4,
+            children: List.generate(10, (index) {
+              return SearchWidget();
+            }),
           ),
         )
       ],
@@ -42,7 +40,8 @@ class SearchWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.deepOrange,
-          image: DecorationImage(fit: BoxFit.cover,
+          image: DecorationImage(
+              fit: BoxFit.cover,
               image: NetworkImage(
                   'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/neMZH82Stu91d3iqvLdNQfqPPyl.jpg'))),
     );
