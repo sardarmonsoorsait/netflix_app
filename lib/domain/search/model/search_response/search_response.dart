@@ -8,10 +8,8 @@ part 'search_response.g.dart';
 class SearchResponse {
   @JsonKey(name: 'results')
   List<SearchResultData> results;
-  
-  
-  SearchResponse({this.results = const []
-    });
+
+  SearchResponse({this.results = const []});
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) {
     return _$SearchResponseFromJson(json);
@@ -31,13 +29,12 @@ class SearchResultData {
   @JsonKey(name: 'poster_path')
   dynamic posterPath;
 
-  String? title;
+ 
 
   SearchResultData({
     this.id,
     this.originalTitle,
     this.posterPath,
-    this.title,
   });
 
   factory SearchResultData.fromJson(Map<String, dynamic> json) {

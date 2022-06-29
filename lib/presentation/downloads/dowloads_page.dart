@@ -50,7 +50,7 @@ class DownlodsPage extends StatelessWidget {
               builder: (context, state) {
                 return Column(
                   children: [
-                    Text('${apiAppendUrl}${state.downloads[5].posterPath}'),
+                    Text('${apiAppendUrl}${state.downloads[0].posterPath}'),
                     SizedBox(
                       child: Stack(
                         alignment: Alignment.center,

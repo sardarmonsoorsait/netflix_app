@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:netflix_app/core/colors/colors.dart';
 import 'package:netflix_app/presentation/search/widgets/search_head.dart';
 
@@ -11,7 +10,7 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SearchHead(head: 'Movies & TV'),
+      const  SearchHead(head: 'Movies & TV'),
         kwidth,
         Expanded(
           child: GridView.count(
@@ -21,7 +20,7 @@ class SearchPage extends StatelessWidget {
             mainAxisSpacing: 5,
             childAspectRatio: 1 / 1.4,
             children: List.generate(10, (index) {
-              return SearchWidget();
+              return const SearchWidget();
             }),
           ),
         )
@@ -40,7 +39,7 @@ class SearchWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.deepOrange,
-          image: DecorationImage(
+          image:const DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(
                   'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/neMZH82Stu91d3iqvLdNQfqPPyl.jpg'))),

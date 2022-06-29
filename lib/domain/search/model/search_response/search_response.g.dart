@@ -24,7 +24,6 @@ SearchResultData _$SearchResultDataFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int?,
       originalTitle: json['original_title'] as String?,
       posterPath: json['poster_path'],
-      title: json['title'] as String?,
     );
 
 Map<String, dynamic> _$SearchResultDataToJson(SearchResultData instance) =>
@@ -32,5 +31,4 @@ Map<String, dynamic> _$SearchResultDataToJson(SearchResultData instance) =>
       'id': instance.id,
       'original_title': instance.originalTitle,
       'poster_path': instance.posterPath,
-      'title': instance.title,
     };
