@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:netflix_app/core/colors/colors.dart';
+import 'package:netflix_app/core/strings.dart';
+import 'package:netflix_app/domain/search/model/search_response/search_response.dart';
 import 'package:netflix_app/presentation/search/widgets/search_head.dart';
 
 class SearchPage extends StatelessWidget {
@@ -10,28 +12,38 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-      const  SearchHead(head: 'Movies & TV'),
+        const SearchHead(head: 'Movies & TV'),
         kwidth,
-        Expanded(
-          child: GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 3,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-            childAspectRatio: 1 / 1.4,
-            children: List.generate(10, (index) {
-              return const SearchWidget();
-            }),
-          ),
-        )
+       
       ],
     );
   }
 }
 
-class SearchWidget extends StatelessWidget {
-  const SearchWidget({Key? key}) : super(key: key);
+class TopSearchWidget extends StatelessWidget {
+  const TopSearchWidget({
+    Key? key,required this.movielist
+  }) : super(key: key);
+  final List<SearchResultData> movielist;
 
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 3,
+      crossAxisSpacing: 5,
+      mainAxisSpacing: 5,
+      childAspectRatio: 1 / 1.4,
+      children: List.generate(movielist.length, (index) {
+        return  SearchWidget(moviePath: movielist[index].posterPath,);
+      }),
+    );
+  }
+}
+
+class SearchWidget extends StatelessWidget {
+  const SearchWidget({Key? key,required this.moviePath}) : super(key: key);
+ final  moviePath;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,10 +51,10 @@ class SearchWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.deepOrange,
-          image:const DecorationImage(
+          image:  DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(
-                  'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/neMZH82Stu91d3iqvLdNQfqPPyl.jpg'))),
+                  '$apiAppendUrl$moviePath'))),
     );
   }
 }

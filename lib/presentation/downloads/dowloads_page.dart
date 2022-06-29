@@ -48,9 +48,10 @@ class DownlodsPage extends StatelessWidget {
             ),
             BlocBuilder<DownloadsBloc, DownloadsState>(
               builder: (context, state) {
+                
                 return Column(
                   children: [
-                    Text('${apiAppendUrl}${state.downloads[0].posterPath}'),
+                   
                     SizedBox(
                       child: Stack(
                         alignment: Alignment.center,
@@ -69,7 +70,7 @@ class DownlodsPage extends StatelessWidget {
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
                                         image: NetworkImage(
-                                            '${apiAppendUrl}${state.downloads[4].posterPath}')),
+                                            '${apiAppendUrl}${ state.downloads[0].posterPath}')),
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.blue),
                               )),
@@ -83,7 +84,7 @@ class DownlodsPage extends StatelessWidget {
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
                                         image: NetworkImage(
-                                            '${apiAppendUrl}${state.downloads[1].posterPath}')),
+                                            '${apiAppendUrl}${ state.downloads[1].posterPath}')),
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.green),
                               )),
@@ -94,7 +95,7 @@ class DownlodsPage extends StatelessWidget {
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: NetworkImage(
-                                        '${apiAppendUrl}${state.downloads[2].posterPath}')),
+                                        '${apiAppendUrl}${ state.downloads[2].posterPath}')),
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.amber),
                           )
