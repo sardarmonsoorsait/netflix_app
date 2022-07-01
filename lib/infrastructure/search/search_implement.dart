@@ -7,7 +7,8 @@ import 'package:dartz/dartz.dart';
 import 'package:netflix_app/domain/search/search_service.dart';
 
 import '../../domain/core/api_end_point.dart';
-@LazySingleton(as:SearchService)
+
+@LazySingleton(as: SearchService)
 class SearchImplement implements SearchService {
   @override
   Future<Either<MainFailures, SearchResponse>> searchMovies(

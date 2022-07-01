@@ -48,62 +48,66 @@ class DownlodsPage extends StatelessWidget {
             ),
             BlocBuilder<DownloadsBloc, DownloadsState>(
               builder: (context, state) {
-                
-                return Column(
-                  children: [
-                   
-                    SizedBox(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 120,
-                            backgroundColor: Colors.grey,
-                          ),
-                          Transform.rotate(
-                              alignment: Alignment(0, 2),
-                              angle: 25 * pi / 180,
-                              child: Container(
-                                height: 200,
-                                width: 125,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            '${apiAppendUrl}${ state.downloads[0].posterPath}')),
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.blue),
-                              )),
-                          Transform.rotate(
-                              alignment: Alignment(0, 2),
-                              angle: -(25 * pi / 180),
-                              child: Container(
-                                height: 200,
-                                width: 125,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            '${apiAppendUrl}${ state.downloads[1].posterPath}')),
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.green),
-                              )),
-                          Container(
-                            height: 200,
-                            width: 125,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(
-                                        '${apiAppendUrl}${ state.downloads[2].posterPath}')),
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.amber),
-                          )
-                        ],
+                if (state.downloads.isEmpty) {
+                  return CircularProgressIndicator(
+                    color: Colors.red,
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      SizedBox(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 120,
+                              backgroundColor: Colors.grey,
+                            ),
+                            Transform.rotate(
+                                alignment: Alignment(0, 2),
+                                angle: 25 * pi / 180,
+                                child: Container(
+                                  height: 200,
+                                  width: 125,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(
+                                              '${apiAppendUrl}${state.downloads[0].posterPath}')),
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.blue),
+                                )),
+                            Transform.rotate(
+                                alignment: Alignment(0, 2),
+                                angle: -(25 * pi / 180),
+                                child: Container(
+                                  height: 200,
+                                  width: 125,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(
+                                              '${apiAppendUrl}${state.downloads[1].posterPath}')),
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.green),
+                                )),
+                            Container(
+                              height: 200,
+                              width: 125,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                          '${apiAppendUrl}${state.downloads[2].posterPath}')),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.amber),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                );
+                    ],
+                  );
+                }
               },
             ),
             Padding(

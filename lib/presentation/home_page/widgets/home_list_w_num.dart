@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_app/application/newhot/newhot_bloc.dart';
 import 'package:netflix_app/core/colors/colors.dart';
+import 'package:netflix_app/core/strings.dart';
 
 class HomeListWnum extends StatelessWidget {
   const HomeListWnum({Key? key, required this.text}) : super(key: key);
@@ -45,20 +50,26 @@ class HomeListContainer extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<NewhotBloc>(context).add(NewhotEvent.intialize());
     return Stack(
       alignment: AlignmentDirectional.bottomStart,
       children: [
-        Container(
-          //constraints:BoxConstraints(minWidth: MediaQuery.of(context).size.width /5) ,
-          height: 100,
-          width: MediaQuery.of(context).size.width / 4,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.black,
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/zzXFM4FKDG7l1ufrAkwQYv2xvnh.jpg'))),
+        BlocBuilder<NewhotBloc, NewhotState>(
+          builder: (context, state) {
+            
+            return Container(
+              //constraints:BoxConstraints(minWidth: MediaQuery.of(context).size.width /5) ,
+              height: 100,
+              width: MediaQuery.of(context).size.width / 4,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black,
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(
+                          '$apiAppendUrl${state.movieList[index].posterPath}'))),
+            );
+          },
         ),
         Stack(
           children: <Widget>[

@@ -19,10 +19,11 @@ class SearchHead extends StatelessWidget {
         children: [
           CupertinoSearchTextField(
             onChanged: (value) {
-               BlocProvider.of<SearchBloc>(context).add(  SearchMovie(movieQuery:value));
+              BlocProvider.of<SearchBloc>(context)
+                  .add(SearchMovie(movieQuery: value));
             },
             backgroundColor: Colors.grey.withOpacity(0.5),
-            style:const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             prefixIcon: const Icon(
               CupertinoIcons.search,
               color: Colors.grey,
@@ -35,7 +36,7 @@ class SearchHead extends StatelessWidget {
           kwidth,
           Text(
             head,
-            style:const TextStyle(color: textColor, fontSize: 25),
+            style: const TextStyle(color: textColor, fontSize: 25),
           ),
         ]);
   }

@@ -14,16 +14,13 @@ class SearchPage extends StatelessWidget {
       children: [
         const SearchHead(head: 'Movies & TV'),
         kwidth,
-       
       ],
     );
   }
 }
 
 class TopSearchWidget extends StatelessWidget {
-  const TopSearchWidget({
-    Key? key,required this.movielist
-  }) : super(key: key);
+  const TopSearchWidget({Key? key, required this.movielist}) : super(key: key);
   final List<SearchResultData> movielist;
 
   @override
@@ -35,15 +32,17 @@ class TopSearchWidget extends StatelessWidget {
       mainAxisSpacing: 5,
       childAspectRatio: 1 / 1.4,
       children: List.generate(movielist.length, (index) {
-        return  SearchWidget(moviePath: movielist[index].posterPath,);
+        return SearchWidget(
+          moviePath: movielist[index].posterPath,
+        );
       }),
     );
   }
 }
 
 class SearchWidget extends StatelessWidget {
-  const SearchWidget({Key? key,required this.moviePath}) : super(key: key);
- final  moviePath;
+  const SearchWidget({Key? key, required this.moviePath}) : super(key: key);
+  final moviePath;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,10 +50,9 @@ class SearchWidget extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.deepOrange,
-          image:  DecorationImage(
+          image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage(
-                  '$apiAppendUrl$moviePath'))),
+              image: NetworkImage('$apiAppendUrl$moviePath'))),
     );
   }
 }

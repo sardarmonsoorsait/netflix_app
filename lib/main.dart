@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_app/application/downloads/downloads_bloc.dart';
+import 'package:netflix_app/application/newhot/newhot_bloc.dart';
+import 'package:netflix_app/application/watching/bloc/watching_bloc.dart';
 import 'package:netflix_app/core/colors/colors.dart';
 import 'package:netflix_app/domain/core/di/injectable.dart';
 import 'package:netflix_app/presentation/new_hot/new_hot.dart';
 
-
 import 'application/search/search/search_bloc.dart';
 import 'presentation/screen_main_page/main_page.dart';
+import 'application/fast_lough/fastlough_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (ctx) => getit<DownloadsBloc>()),
-         BlocProvider(create: (ctx) => getit<SearchBloc>()),
+        BlocProvider(create: (ctx) => getit<SearchBloc>()),
+        BlocProvider(create: (ctx) => getit<FastloughBloc>()),
+        BlocProvider(create: (ctx) => getit<NewhotBloc>()),
+        BlocProvider(create: (ctx) => getit<WatchingBloc>()),
       ],
       child: MaterialApp(
         title: 'Netflix',

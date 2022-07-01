@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:netflix_app/application/fast_lough/fastlough_bloc.dart';
+import 'package:netflix_app/application/newhot/newhot_bloc.dart';
+import 'package:netflix_app/application/watching/bloc/watching_bloc.dart';
 import 'package:netflix_app/core/colors/colors.dart';
+import 'package:netflix_app/domain/watching/models/result.dart';
+//import 'package:netflix_app/domain/new_hot/newhot/result.dart';
+
+import '../../core/strings.dart';
 
 class NewHot extends StatelessWidget {
   NewHot({Key? key, required this.title}) : super(key: key);
@@ -54,15 +63,22 @@ class TbpageOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: ((context, index) {
-        return newhot(context);
-      }),
-      itemCount: 2,
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      BlocProvider.of<NewhotBloc>(context).add((const NewhotEvent.intialize()));
+    });
+    return BlocBuilder<NewhotBloc, NewhotState>(
+      builder: (context, state) {
+        return ListView.builder(
+          itemBuilder: ((context, index) {
+            return newhot(context, index, state);
+          }),
+          itemCount: state.movieList.length,
+        );
+      },
     );
   }
 
-  Row newhot(BuildContext context) {
+  Row newhot(BuildContext context, int index, NewhotState state) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -71,7 +87,8 @@ class TbpageOne extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 6,
           decoration: BoxDecoration(color: Colors.transparent),
           child: Text(
-            'FEB\n 11',
+            // 'FEB\n 11',
+            '  ${state.movieList[index].releaseDate!.split('-')[1]}\n  ${state.movieList[index].releaseDate!.split('-')[2]}\n${state.movieList[index].releaseDate!.split('-')[0]}',
             style: TextStyle(color: textColor, fontSize: 25),
           ),
         ),
@@ -86,17 +103,24 @@ class TbpageOne extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width -
                     MediaQuery.of(context).size.width / 6,
-                height: MediaQuery.of(context).size.height / 4.5,
-                decoration: BoxDecoration(color: Colors.orange),
+                height: MediaQuery.of(context).size.height / 3.5,
+                decoration: BoxDecoration(
+                    color: Colors.orange,
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(
+                            '$apiAppendUrl${state.movieList[index].posterPath}'))),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('TALLGIRL2',
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: 25,
-                      )),
+                  Expanded(
+                    child: Text(state.movieList[index].originalTitle ?? "fake",
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 25,
+                        )),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -129,16 +153,18 @@ class TbpageOne extends StatelessWidget {
                 ],
               ),
               Text(
-                'Tall Girl 2',
+                state.movieList[index].title ?? "title not available",
                 style: TextStyle(
                   fontSize: 20,
                   color: textColor,
                 ),
                 textAlign: TextAlign.start,
               ),
-              Text(
-                'Landing the lead in the school musical is a dream come truefor jod,until the pressuresounds her confidence--and her relationship--into a dustpin',
-                style: TextStyle(color: textColor, fontSize: 16),
+              Expanded(
+                child: Text(
+                  state.movieList[index].overview ?? "OverView not available",
+                  style: TextStyle(color: textColor, fontSize: 16),
+                ),
               )
             ],
           ),
@@ -149,35 +175,60 @@ class TbpageOne extends StatelessWidget {
 }
 
 class TbpageTwo extends StatelessWidget {
-  const TbpageTwo({Key? key}) : super(key: key);
+  const TbpageTwo({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+  
+      BlocProvider.of<WatchingBloc>(context)
+          .add(const WatchingEvent.intialized());
+   
+
+    return BlocBuilder<WatchingBloc, WatchingState>(
+      builder: (context, state) {
+       
+        return ListView.separated(
+            itemBuilder: ((context, index) {
+              return SecondTabColumn(index, state.tvList);
+            }),
+            separatorBuilder: (context, index) {
+              return SizedBox(
+                height: 10,
+              );
+            },
+            itemCount: state.tvList.length);
+      },
+    );
+  }
+
+  Column SecondTabColumn(int index, List<Result> tvList) {
     return Column(
       children: [
         Text(
-          'Friends',
+          tvList[index].name ?? "Name note Available",
           style: TextStyle(
-              color: textColor, fontSize: 20, fontStyle: FontStyle.italic),
+              color: textColor, fontSize:35, fontStyle: FontStyle.italic),
         ),
         Text(
-          'This hit subccom follows the merry missadadventure of mix 20-somthing falls as they navigate the pitfalls of work,life and love in 1990s Manhattan',
+          tvList[index].overview ?? "OverView not Available",
           style: TextStyle(color: textColor),
         ),
         SizedBox(
-          height: 100,
+          height: 50,
         ),
         Container(
           height: 250,
           width: double.infinity,
-          decoration: BoxDecoration(color: Colors.blueGrey),
+          decoration: BoxDecoration(color: Colors.blueGrey,image: DecorationImage(fit: BoxFit.fill,image: NetworkImage('$apiAppendUrl${tvList[index].posterPath}'))),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Lost \n in \n space ',
-              style: TextStyle(color: textColor, fontSize: 20),
+              tvList[index].originalName ?? "Original date not available",
+              style: TextStyle(color: textColor, fontSize:10),
             ),
             Row(
               children: [

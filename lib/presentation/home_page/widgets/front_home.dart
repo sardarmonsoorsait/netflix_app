@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_app/application/downloads/downloads_bloc.dart';
 import 'package:netflix_app/core/colors/colors.dart';
+import 'package:netflix_app/core/strings.dart';
 import 'package:netflix_app/presentation/home_page/widgets/app_bar_widget_with_image.dart';
 import 'package:netflix_app/presentation/home_page/home_page.dart';
 
@@ -21,16 +26,23 @@ class FrontHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<DownloadsBloc>(context)
+        .add(DownloadsEvent.getDownloadImages());
     return Stack(
       children: [
-        Container(
-          constraints: BoxConstraints(maxHeight: 600),
-          // height: 800,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/4j0PNHkMr5ax3IA8tjtxcmPU3QT.jpg'))),
+        BlocBuilder<DownloadsBloc, DownloadsState>(
+          builder: (context, state) {
+            final random = Random();
+            return Container(
+              constraints: BoxConstraints(maxHeight: 600),
+              // height: 800,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                          '$apiAppendUrl${state.downloads[random.nextInt(state.downloads.length)].posterPath}'))),
+            );
+          },
         ),
         Positioned(
           bottom: 0,
