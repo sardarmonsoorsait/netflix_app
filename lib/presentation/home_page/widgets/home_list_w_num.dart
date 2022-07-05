@@ -56,19 +56,21 @@ class HomeListContainer extends StatelessWidget {
       children: [
         BlocBuilder<NewhotBloc, NewhotState>(
           builder: (context, state) {
-            
-            return Container(
-              //constraints:BoxConstraints(minWidth: MediaQuery.of(context).size.width /5) ,
-              height: 100,
-              width: MediaQuery.of(context).size.width / 4,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black,
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(
-                          '$apiAppendUrl${state.movieList[index].posterPath}'))),
-            );
+            final movielist = state.movieList;
+            return movielist.isEmpty == true
+                ? Center(child: CircularProgressIndicator())
+                : Container(
+                    //constraints:BoxConstraints(minWidth: MediaQuery.of(context).size.width /5) ,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width / 4,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                                '$apiAppendUrl${state.movieList[index].posterPath}'))),
+                  );
           },
         ),
         Stack(

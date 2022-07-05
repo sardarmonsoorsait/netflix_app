@@ -11,6 +11,8 @@ import 'package:netflix_app/core/strings.dart';
 import 'package:netflix_app/presentation/home_page/widgets/app_bar_widget_with_image.dart';
 import 'package:netflix_app/presentation/home_page/home_page.dart';
 
+import '../../../application/home/home_bloc.dart';
+
 ValueNotifier<String> dropdownNotifier = ValueNotifier(items[0]);
 var items = [
   'Categories',
@@ -26,22 +28,29 @@ class FrontHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<DownloadsBloc>(context)
-        .add(DownloadsEvent.getDownloadImages());
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      BlocProvider.of<HomeBloc>(context).add(HomeEvent.started());
+    });
     return Stack(
       children: [
-        BlocBuilder<DownloadsBloc, DownloadsState>(
+        BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             final random = Random();
-            return Container(
-              constraints: BoxConstraints(maxHeight: 600),
-              // height: 800,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          '$apiAppendUrl${state.downloads[random.nextInt(state.downloads.length)].posterPath}'))),
-            );
+            if (state.movieresult.isEmpty) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Container(
+                constraints: BoxConstraints(maxHeight: 600),
+                // height: 800,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            '$apiAppendUrl2${state.movieresult[random.nextInt(state.movieresult.length)].posterPath}'))),
+              );
+            }
           },
         ),
         Positioned(

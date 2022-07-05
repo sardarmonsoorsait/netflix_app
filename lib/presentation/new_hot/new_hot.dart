@@ -181,14 +181,11 @@ class TbpageTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-      BlocProvider.of<WatchingBloc>(context)
-          .add(const WatchingEvent.intialized());
-   
+    BlocProvider.of<WatchingBloc>(context)
+        .add(const WatchingEvent.intialized());
 
     return BlocBuilder<WatchingBloc, WatchingState>(
       builder: (context, state) {
-       
         return ListView.separated(
             itemBuilder: ((context, index) {
               return SecondTabColumn(index, state.tvList);
@@ -209,7 +206,7 @@ class TbpageTwo extends StatelessWidget {
         Text(
           tvList[index].name ?? "Name note Available",
           style: TextStyle(
-              color: textColor, fontSize:35, fontStyle: FontStyle.italic),
+              color: textColor, fontSize: 35, fontStyle: FontStyle.italic),
         ),
         Text(
           tvList[index].overview ?? "OverView not Available",
@@ -221,14 +218,19 @@ class TbpageTwo extends StatelessWidget {
         Container(
           height: 250,
           width: double.infinity,
-          decoration: BoxDecoration(color: Colors.blueGrey,image: DecorationImage(fit: BoxFit.fill,image: NetworkImage('$apiAppendUrl${tvList[index].posterPath}'))),
+          decoration: BoxDecoration(
+              color: Colors.blueGrey,
+              image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(
+                      '$apiAppendUrl${tvList[index].posterPath}'))),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               tvList[index].originalName ?? "Original date not available",
-              style: TextStyle(color: textColor, fontSize:10),
+              style: TextStyle(color: textColor, fontSize: 10),
             ),
             Row(
               children: [
